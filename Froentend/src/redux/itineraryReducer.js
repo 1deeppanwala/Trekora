@@ -18,14 +18,14 @@ const itineraryReducer = (state = initialState, action) => {
         ...state,
         itineraries: state.itineraries.filter(
           (itinerary) => itinerary.id !== action.payload
-        ), // remove itinerary by id
+        ), 
       };
     case EDIT_ITINERARY:
       return {
         ...state,
         itineraries: state.itineraries.map((itinerary) =>
           itinerary.id === action.payload.id ? action.payload : itinerary
-        ), // update itinerary
+        ), 
       };
     default:
       return state;
