@@ -8,9 +8,9 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Implement login functionality here
+  
     console.log('Login with:', email, password);
-    // After successful login, navigate to Home
+    
     navigation.navigate('Home');
   };
 
