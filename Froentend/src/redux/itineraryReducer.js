@@ -11,7 +11,7 @@ const itineraryReducer = (state = initialState, action) => {
     case CREATE_ITINERARY:
       return {
         ...state,
-        itineraries: [...state.itineraries, action.payload], // add new itinerary
+        itineraries: [...state.itineraries, action.payload], 
       };
     case DELETE_ITINERARY:
       return {
