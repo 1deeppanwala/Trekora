@@ -6,9 +6,9 @@ const DestinationService = {
   getDestinations: async (filters) => {
     try {
       const response = await axios.get(`${API_URL}`, {
-        params: filters,  // Send filters as query parameters
+        params: filters, 
       });
-      return response.data;  // Assuming API returns an array of destinations
+      return response.data; 
     } catch (error) {
       throw new Error('Failed to fetch destinations. Please try again later.');
     }
