@@ -48,4 +48,3 @@ export const editItinerary = (itinerary) => ({
 });
 
 export default itineraryReducer;
-
