@@ -1,37 +1,36 @@
 import axios from 'axios';
 
-const API_URL = 'https://backend-api.com/api/auth';  
+const API_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=API_KEY';
 
 const AuthService = {
   login: async (email, password) => {
     try {
-      const response = await axios.post(${API_URL}/login, {
-        email,
-        password,
-      });
-      
-      return response.data;
+      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const { token, user } = response.data;
+      localStorage.setItem('userToken', token);
+      return { token, user };
     } catch (error) {
-      throw new Error('Login failed. Please check your credentials.');
+      console.error('Login error:', error);
+      throw error;
     }
   },
 
-  register: async (name, email, password) => {
+  signup: async (email, password, name) => {
     try {
-      const response = await axios.post(${API_URL}/register, {
-        name,
-        email,
-        password,
-      });
+      const response = await axios.post(`${API_URL}/signup`, { email, password, name });
       return response.data;
     } catch (error) {
-      throw new Error('Registration failed. Please try again.');
+      console.error('Signup error:', error);
+      throw error;
     }
   },
 
   logout: () => {
-  
     localStorage.removeItem('userToken');
+  },
+
+  getCurrentUser: () => {
+    return localStorage.getItem('userToken');
   },
 };
 
