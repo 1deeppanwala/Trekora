@@ -8,22 +8,24 @@ const ItineraryScreen = () => {
   const [itinerary, setItinerary] = useState('');
   const [activities, setActivities] = useState([]);
 
-  const handleAddActivity = () => {
-    setActivities([...activities, itinerary]);
-    setItinerary('');
+  const addActivity = () => {
+    if (itinerary.trim()) {
+      setActivities([...activities, itinerary]);
+      setItinerary(''); 
+    }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Create Your Itinerary</Text>
       <InputField 
-        placeholder="Add destination/activity" 
-        value={itinerary} 
-        onChangeText={setItinerary} 
+        value={itinerary}
+        onChangeText={setItinerary}
+        placeholder="Add activity..." 
       />
-      <Button title="Add" onPress={handleAddActivity} />
-      
-      <View style={styles.itineraryList}>
+      <Button title="Add Activity" onPress={addActivity} />
+
+      <View style={styles.activities}>
         {activities.map((activity, index) => (
           <Card key={index} title={activity} />
         ))}
@@ -34,15 +36,16 @@ const ItineraryScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
     marginBottom: 20,
+    textAlign: 'center',
   },
-  itineraryList: {
+  activities: {
     marginTop: 20,
   },
 });
