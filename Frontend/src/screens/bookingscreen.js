@@ -1,34 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Button from '../components/Button';
+import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native';
 import InputField from '../components/InputField';
+import Button from '../components/Button';
 import Card from '../components/Card';
 
 const BookingScreen = () => {
-  const [bookingDetails, setBookingDetails] = useState('');
-  const [bookings, setBookings] = useState([]);
-
-  const handleAddBooking = () => {
-    setBookings([...bookings, bookingDetails]);
-    setBookingDetails('');
+  const [destination, setDestination] = useState('');
+  const [bookingDetails, setBookingDetails] = useState([]);
+  
+  const handleBooking = () => {
+    if (destination.trim()) {
+      setBookingDetails([...bookingDetails, destination]);
+      setDestination('');
+      Alert.alert('Booking Successful', Your booking for ${destination} has been confirmed!);
+    } else {
+      Alert.alert('Error', 'Please enter a destination.');
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Manage Your Bookings</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Book Your Trip</Text>
       <InputField 
-        placeholder="Enter flight/hotel details" 
-        value={bookingDetails} 
-        onChangeText={setBookingDetails} 
+        value={destination}
+        onChangeText={setDestination}
+        placeholder="Enter Destination" 
       />
-      <Button title="Add Booking" onPress={handleAddBooking} />
+      <Button title="Book Now" onPress={handleBooking} />
       
-      <View style={styles.bookingList}>
-        {bookings.map((booking, index) => (
-          <Card key={index} title={booking} />
+      <View style={styles.bookings}>
+        {bookingDetails.map((detail, index) => (
+          <Card key={index} title={detail} />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -40,10 +45,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
     marginBottom: 20,
+    textAlign: 'center',
   },
-  bookingList: {
+  bookings: {
     marginTop: 20,
   },
 });
