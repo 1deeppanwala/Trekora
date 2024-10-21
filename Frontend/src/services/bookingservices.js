@@ -1,29 +1,29 @@
 import axios from 'axios';
 
-const API_URL = 'https://third-party-booking-api.com';  
+const API_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=API_KEY';
 
-const BookingService = {
-  searchFlights: async (origin, destination, date) => {
+const DestinationService = {
+  searchDestinations: async (query) => {
     try {
-      const response = await axios.get(${API_URL}/flights, {
-        params: { origin, destination, date },
+      const response = await axios.get(`${API_URL}/search`, {
+        params: { query },
       });
-      return response.data;  
+      return response.data.destinations;
     } catch (error) {
-      throw new Error('Failed to fetch flight data. Please try again later.');
+      console.error('Error searching destinations:', error);
+      throw error;
     }
   },
 
-  searchHotels: async (location, checkInDate, checkOutDate) => {
+  getDestinationDetails: async (destinationId) => {
     try {
-      const response = await axios.get(${API_URL}/hotels, {
-        params: { location, checkInDate, checkOutDate },
-      });
-      return response.data;  
+      const response = await axios.get(`${API_URL}/${destinationId}`);
+      return response.data;
     } catch (error) {
-      throw new Error('Failed to fetch hotel data. Please try again later.');
+      console.error('Error fetching destination details:', error);
+      throw error;
     }
   },
 };
 
-export default BookingService;
+export default DestinationService;
