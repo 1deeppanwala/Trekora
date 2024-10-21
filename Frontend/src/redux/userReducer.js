@@ -8,7 +8,6 @@ const initialState = {
   error: null,
 };
 
-
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
@@ -34,7 +33,6 @@ const userReducer = (state = initialState, action) => {
       return state;
   }
 };
-
 
 export const loginSuccess = (userData) => ({
   type: LOGIN_SUCCESS,
