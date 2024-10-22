@@ -1,7 +1,8 @@
 {
   "name": "Trekora",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,21 +10,56 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~48.0.0", 
+    "expo": "~48.0.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-native": "0.70.0",
-    "react-navigation": "^6.0.0",
-    "react-redux": "^7.2.0",
-    "axios": "^0.24.0",  // For API calls
-    "redux": "^4.1.0",
-    "redux-thunk": "^2.3.0",  // Middleware for Redux async actions
-    "@react-navigation/native": "^6.0.10",  // Navigation for React Native
-    "@react-navigation/stack": "^6.2.1",  // Stack navigator
-    "expo-font": "~10.0.0"  // For loading custom fonts
+    "react-native": "0.71.0",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-reanimated": "~3.0.0",
+    "react-native-screens": "~3.18.0",
+    "react-native-safe-area-context": "4.5.0",
+    "react-native-vector-icons": "9.1.0",  // Icons
+    "react-redux": "^8.0.5",  // Redux bindings for React
+    "redux": "^4.2.1",  // Redux state management
+    "redux-thunk": "^2.4.2",  // Middleware for async actions
+    "axios": "^1.2.2",  // For API calls
+    "@react-navigation/native": "^6.1.4",  // Navigation library
+    "@react-navigation/stack": "^6.3.12",  // Stack navigator
+    "@react-navigation/bottom-tabs": "^6.5.7",  // Bottom tab navigator
+    "expo-font": "~11.0.0",  // For custom fonts
+    "expo-app-loading": "~2.1.0"  // App loading screen
   },
   "devDependencies": {
-    "babel-preset-expo": "~9.0.0"
+    "@babel/core": "^7.19.6"
   },
-  "private": true
+  "expo": {
+    "name": "Trekora",
+    "slug": "Trekora",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
 }
