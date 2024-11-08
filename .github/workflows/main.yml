@@ -17,11 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3  # Updated to v3 to use the latest stable version
 
-      # Step 2: Set up Node.js
+      # Step 2: Set up Node.js (Explicitly specify Node.js 20)
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # Updated to v3 to use the latest stable version
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Specify the Node.js version you need, e.g., 16, 18, or 20
+          node-version: '20'  # Explicitly using Node.js 20 to avoid issues in the future
 
       # Step 3: Install dependencies
       - name: Install dependencies
