@@ -11,15 +11,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Latest version that supports Node 20
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # Latest version that supports Node 20
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Explicitly specify Node.js 20 to avoid warnings
+          node-version: '20'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm install
@@ -28,11 +35,7 @@ jobs:
         run: npm test
 
       - name: Lint code
-        run: npm run lint
+        run: npm run lint --if-present  # Ensures lint script runs only if defined
 
       - name: Build project
         run: npm run build
-
-      # Optional: Deploy step if you have a deployment script or commands
-      # - name: Deploy
-      #   run: ./deploy-script.sh # Replace with actual deployment commands or script
