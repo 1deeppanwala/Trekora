@@ -2,35 +2,28 @@ name: Node.js CI
 
 on:
   push:
-    branches:
-      - main  # Trigger workflow on push to main branch
+    branches: [ main ]
   pull_request:
-    branches:
-      - main  # Trigger workflow on pull request to main branch
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository code
       - name: Checkout code
-        uses: actions/checkout@v3  # Updated to v3 to use the latest stable version
+        uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js (Explicitly specify Node.js 20)
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '20'  # Explicitly using Node.js 20 to avoid issues in the future
+          node-version: '16'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install  # This will install all dependencies from package.json
+        run: npm install
 
-      # Step 4: Run tests (using Jest or other testing frameworks)
       - name: Run tests
-        run: npm test  # Replace with your test command if you're using something else like mocha
+        run: npm test
 
-      # Optional: Build the project (if you have a build step)
-      - name: Build project
-        run: npm run build  # Replace with your build command if necessary
+      - name: Lint code
+        run: npm run lint
