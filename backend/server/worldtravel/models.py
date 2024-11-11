@@ -33,12 +33,14 @@ class Region(models.Model):
     def __str__(self):
         return self.name
 
+
 class VisitedRegion(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(
         User, on_delete=models.CASCADE, default=default_user_id)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
+    
     def __str__(self):
         return f'{self.region.name} ({self.region.country.country_code}) visited by: {self.user_id.username}'
     
