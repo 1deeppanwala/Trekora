@@ -1,8 +1,14 @@
 <script lang="ts">
+
+
+
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
 	import type { Adventure, Collection, User } from '$lib/types';
 	const dispatch = createEventDispatcher();
+
+
+
 
 	import Launch from '~icons/mdi/launch';
 	import FileDocumentEdit from '~icons/mdi/file-document-edit';
@@ -11,26 +17,45 @@
 	import MapMarker from '~icons/mdi/map-marker';
 	import { addToast } from '$lib/toasts';
 	import Link from '~icons/mdi/link-variant';
+
+
+
 	import CheckBold from '~icons/mdi/check-bold';
 	import FormatListBulletedSquare from '~icons/mdi/format-list-bulleted-square';
 	import LinkVariantRemove from '~icons/mdi/link-variant-remove';
 	import Plus from '~icons/mdi/plus';
 	import CollectionLink from './CollectionLink.svelte';
+
+
 	import DotsHorizontal from '~icons/mdi/dots-horizontal';
 	import DeleteWarning from './DeleteWarning.svelte';
 	import { isAdventureVisited, typeToString } from '$lib';
 	import CardCarousel from './CardCarousel.svelte';
 
 	export let type: string;
+
+
+
 	export let user: User | null;
 	export let collection: Collection | null = null;
 
 	let isCollectionModalOpen: boolean = false;
+
+
+
+
 	let isWarningModalOpen: boolean = false;
+
+
 
 	export let adventure: Adventure;
 
 	let activityTypes: string[] = [];
+
+
+
+
+
 	// makes it reactivty to changes so it updates automatically
 	$: {
 		if (adventure.activity_types) {
@@ -40,8 +65,14 @@
 				let remaining = adventure.activity_types.length - 3;
 				activityTypes.push('+' + remaining);
 			}
+
+
+
 		}
 	}
+
+
+
 
 	async function deleteAdventure() {
 		let res = await fetch(`/adventures/${adventure.id}?/delete`, {
@@ -50,6 +81,9 @@
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		});
+
+
+
 		if (res.ok) {
 			console.log('Adventure deleted');
 			addToast('info', 'Adventure deleted successfully!');
@@ -59,6 +93,9 @@
 		}
 	}
 
+
+
+
 	async function removeFromCollection() {
 		let res = await fetch(`/api/adventures/${adventure.id}`, {
 			method: 'PATCH',
@@ -66,6 +103,8 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ collection: null })
+
+
 		});
 		if (res.ok) {
 			console.log('Adventure removed from collection');
@@ -74,6 +113,8 @@
 		} else {
 			console.log('Error removing adventure from collection');
 		}
+
+
 	}
 
 	function changeType(newType: string) {
@@ -85,6 +126,8 @@
 				},
 				body: JSON.stringify({ type: newType })
 			});
+
+
 			if (res.ok) {
 				console.log('Adventure type changed');
 				dispatch('typeChange', adventure.id);
@@ -94,6 +137,8 @@
 				console.log('Error changing adventure type');
 			}
 		};
+
+
 	}
 
 	async function linkCollection(event: CustomEvent<number>) {
@@ -105,6 +150,8 @@
 			},
 			body: JSON.stringify({ collection: collectionId })
 		});
+
+
 		if (res.ok) {
 			console.log('Adventure linked to collection');
 			addToast('info', 'Adventure linked to collection successfully!');
@@ -113,6 +160,8 @@
 		} else {
 			console.log('Error linking adventure to collection');
 		}
+
+
 	}
 
 	function editAdventure() {
@@ -124,9 +173,14 @@
 	}
 </script>
 
+
+
 {#if isCollectionModalOpen}
 	<CollectionLink on:link={linkCollection} on:close={() => (isCollectionModalOpen = false)} />
 {/if}
+
+
+
 
 {#if isWarningModalOpen}
 	<DeleteWarning
@@ -136,6 +190,9 @@
 		is_warning={false}
 		on:close={() => (isWarningModalOpen = false)}
 		on:confirm={deleteAdventure}
+
+
+
 	/>
 {/if}
 
@@ -144,26 +201,43 @@
 >
 	<CardCarousel adventures={[adventure]} />
 
+
+
+
 	<div class="card-body">
 		<div class="flex justify-between">
+
+
+
 			<button
 				on:click={() => goto(`/adventures/${adventure.id}`)}
 				class="text-2xl font-semibold -mt-2 break-words text-wrap hover:underline text-left"
 			>
 				{adventure.name}
+
+
 			</button>
+
+
+
 		</div>
 		<div>
 			<div class="badge badge-primary">{typeToString(adventure.type)}</div>
 			<div class="badge badge-success">{isAdventureVisited(adventure) ? 'Visited' : 'Planned'}</div>
 			<div class="badge badge-secondary">{adventure.is_public ? 'Public' : 'Private'}</div>
 		</div>
+
+
+
 		{#if adventure.location && adventure.location !== ''}
 			<div class="inline-flex items-center">
 				<MapMarker class="w-5 h-5 mr-1" />
 				<p class="ml-.5">{adventure.location}</p>
 			</div>
 		{/if}
+
+
+
 		{#if adventure.visits.length > 0}
 			<!-- visited badge -->
 			<div class="flex items-center">
@@ -172,6 +246,9 @@
 					{adventure.visits.length}
 					{adventure.visits.length > 1 ? 'visits' : 'visit'}
 				</p>
+
+
+
 			</div>
 		{/if}
 		{#if adventure.activity_types && adventure.activity_types.length > 0}
@@ -182,6 +259,9 @@
 					</div>
 				{/each}
 			</ul>
+
+
+
 		{/if}
 		<div class="card-actions justify-end mt-2">
 			<!-- action options dropdown -->
@@ -190,13 +270,21 @@
 					<div class="dropdown dropdown-end">
 						<div tabindex="0" role="button" class="btn btn-neutral-200">
 							<DotsHorizontal class="w-6 h-6" />
+
+
+
 						</div>
 						<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 						<ul
 							tabindex="0"
-							class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+						
+
+
+                                          class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
 						>
-							<button
+							
+
+<button
 								class="btn btn-neutral mb-2"
 								on:click={() => goto(`/adventures/${adventure.id}`)}
 								><Launch class="w-6 h-6" />Open Details</button
@@ -206,10 +294,14 @@
 							</button>
 							{#if adventure.type == 'visited' && user?.pk == adventure.user_id}
 								<button class="btn btn-neutral mb-2" on:click={changeType('planned')}
-									><FormatListBulletedSquare class="w-6 h-6" />Change to Plan</button
+							
+
+><FormatListBulletedSquare class="w-6 h-6" />Change to Plan</button
 								>
 							{/if}
-							{#if adventure.type == 'planned' && user?.pk == adventure.user_id}
+							
+
+{#if adventure.type == 'planned' && user?.pk == adventure.user_id}
 								<button class="btn btn-neutral mb-2" on:click={changeType('visited')}
 									><CheckBold class="w-6 h-6" />Mark Visited</button
 								>
@@ -219,7 +311,9 @@
 								<button class="btn btn-neutral mb-2" on:click={removeFromCollection}
 									><LinkVariantRemove class="w-6 h-6" />Remove from Collection</button
 								>
-							{/if}
+							
+
+{/if}
 							{#if !adventure.collection}
 								<button class="btn btn-neutral mb-2" on:click={() => (isCollectionModalOpen = true)}
 									><Plus class="w-6 h-6" />Add to Collection</button
@@ -228,7 +322,10 @@
 							<button
 								id="delete_adventure"
 								data-umami-event="Delete Adventure"
-								class="btn btn-warning"
+						
+
+
+class="btn btn-warning"
 								on:click={() => (isWarningModalOpen = true)}
 								><TrashCan class="w-6 h-6" />Delete</button
 							>
@@ -237,12 +334,18 @@
 				{:else}
 					<button
 						class="btn btn-neutral-200 mb-2"
-						on:click={() => goto(`/adventures/${adventure.id}`)}><Launch class="w-6 h-6" /></button
+				
+
+
+on:click={() => goto(`/adventures/${adventure.id}`)}><Launch class="w-6 h-6" /></button
 					>
 				{/if}
 			{/if}
 			{#if type == 'link'}
-				<button class="btn btn-primary" on:click={link}><Link class="w-6 h-6" /></button>
+			
+
+
+<button class="btn btn-primary" on:click={link}><Link class="w-6 h-6" /></button>
 			{/if}
 		</div>
 	</div>
