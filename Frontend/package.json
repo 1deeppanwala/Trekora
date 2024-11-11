@@ -1,65 +1,41 @@
 {
-  "name": "Trekora",
-  "version": "1.0.0",
-  "private": true,
-  "main": "index.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
-  "dependencies": {
-    "expo": "~48.0.0",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
-    "react-native": "0.71.0",
-    "react-native-gesture-handler": "~2.9.0",
-    "react-native-reanimated": "~3.0.0",
-    "react-native-screens": "~3.18.0",
-    "react-native-safe-area-context": "4.5.0",
-    "react-native-vector-icons": "9.1.0",  // Icons
-    "react-redux": "^8.0.5",  // Redux bindings for React
-    "redux": "^4.2.1",  // Redux state management
-    "redux-thunk": "^2.4.2",  // Middleware for async actions
-    "axios": "^1.2.2",  // For API calls
-    "@react-navigation/native": "^6.1.4",  // Navigation library
-    "@react-navigation/stack": "^6.3.12",  // Stack navigator
-    "@react-navigation/bottom-tabs": "^6.5.7",  // Bottom tab navigator
-    "expo-font": "~11.0.0",  // For custom fonts
-    "expo-app-loading": "~2.1.0"  // App loading screen
-  },
-  "devDependencies": {
-    "@babel/core": "^7.19.6"
-  },
-  "expo": {
-    "name": "Trekora",
-    "slug": "Trekora",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+	"name": "Trekora-frontend",
+	"version": "0.7.0",
+	"scripts": {
+		"start": "vite dev",
+		"dev": "vite dev",
+		"django": "cd .. && cd backend/server && python3 manage.py runserver",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check .",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@iconify-json/mdi": "^1.1.67",
+		"@sveltejs/adapter-auto": "^3.2.2",
+		"@sveltejs/adapter-node": "^5.2.0",
+		"@sveltejs/adapter-vercel": "^5.4.1",
+		"@sveltejs/kit": "^2.5.17",
+		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"@tailwindcss/typography": "^0.5.13",
+		"@types/node": "^22.5.4",
+		"autoprefixer": "^10.4.19",
+		"daisyui": "^4.12.6",
+		"postcss": "^8.4.38",
+		"prettier": "^3.3.2",
+		"prettier-plugin-svelte": "^3.2.5",
+		"svelte": "^4.2.19",
+		"svelte-check": "^3.8.1",
+		"tailwindcss": "^3.4.4",
+		"tslib": "^2.6.3",
+		"typescript": "^5.5.2",
+		"unplugin-icons": "^0.19.0",
+		"vite": "^5.3.6"
+	},
+	"type": "module",
+	"dependencies": {
+		"svelte-maplibre": "^0.9.8"
+	}
 }
