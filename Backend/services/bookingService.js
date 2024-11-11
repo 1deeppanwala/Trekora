@@ -1,8 +1,12 @@
 const axios = require('axios');
 
+
+
 const API_URL = 'https://your-booking-api.com/api'; 
 const BookingService = {
 
+
+  
   searchBookings: async (criteria) => {
     try {
       const response = await axios.get(${API_URL}/search, { params: criteria });
@@ -11,6 +15,8 @@ const BookingService = {
       throw new Error('Booking search failed. Please try again.');
     }
   },
+
+  
 
   
   makeBooking: async (bookingDetails) => {
@@ -23,7 +29,11 @@ const BookingService = {
   },
 
   
+
+  
   cancelBooking: async (bookingId) => {
+    
+    
     try {
       const response = await axios.delete(${API_URL}/book/${bookingId});
       return response.data;
