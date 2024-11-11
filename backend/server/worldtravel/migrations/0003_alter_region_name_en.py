@@ -5,10 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
+    
     dependencies = [
         ('worldtravel', '0002_region_name_en'),
     ]
 
+    
     operations = [
         migrations.AlterField(
             model_name='region',
