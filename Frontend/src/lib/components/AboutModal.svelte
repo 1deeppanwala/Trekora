@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+
+        import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 	import { onMount } from 'svelte';
 	let modal: HTMLDialogElement;
@@ -51,7 +52,7 @@
 		<p class="py-1"></p>
 		<p class="py-1">
 			<a
-				href="https://github.com/seanmorley15/AdventureLog"
+				href=""
 				target="_blank"
 				rel="noopener noreferrer"
 				class="text-primary-500 underline"></a

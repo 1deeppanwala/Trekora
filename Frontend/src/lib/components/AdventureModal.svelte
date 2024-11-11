@@ -204,7 +204,7 @@
 		}
 		let res = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=jsonv2`, {
 			headers: {
-				'User-Agent': `AdventureLog / ${appVersion} `
+				'User-Agent': `Trekora / ${appVersion} `
 			}
 		});
 		console.log(res);
@@ -255,7 +255,7 @@
 			`https://nominatim.openstreetmap.org/search?q=${adventure.latitude},${adventure.longitude}&format=jsonv2`,
 			{
 				headers: {
-					'User-Agent': `AdventureLog / ${appVersion} `
+					'User-Agent': `Trekora / ${appVersion} `
 				}
 			}
 		);
