@@ -5,10 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
+    
     dependencies = [
         ('worldtravel', '0007_remove_region_geometry_remove_region_name_en'),
     ]
 
+    
     operations = [
         migrations.AddField(
             model_name='region',
