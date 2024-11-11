@@ -15,6 +15,7 @@ from rest_framework.decorators import action
 from django.contrib.staticfiles import finders
 from adventures.models import Adventure
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def regions_by_country(request, country_code):
@@ -24,6 +25,7 @@ def regions_by_country(request, country_code):
     serializer = RegionSerializer(regions, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def visits_by_country(request, country_code):
@@ -32,6 +34,7 @@ def visits_by_country(request, country_code):
 
     serializer = VisitedRegionSerializer(visits, many=True)
     return Response(serializer.data)
+
 
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Country.objects.all().order_by('name')
@@ -50,7 +53,8 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'in_region': True, 'region_name': region.name, 'region_id': region.id})
         else:
             return Response({'in_region': False})
-        
+
+    
     # make a post action that will get all of the users adventures and check if the point is in any of the regions if so make a visited region object for that user if it does not already exist
     @action(detail=False, methods=['post'])
     def region_check_all_adventures(self, request):
