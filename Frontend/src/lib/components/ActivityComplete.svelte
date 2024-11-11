@@ -1,14 +1,24 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+
+
 	export let activities: string[] | undefined | null;
 
 	let allActivities: string[] = [];
+
+
+
 	let inputVal: string = '';
+
+
 
 	if (activities == null || activities == undefined) {
 		activities = [];
 	}
+
+
+
 
 	onMount(async () => {
 		let res = await fetch('/activities', {
@@ -17,12 +27,16 @@
 				'Content-Type': 'application/json'
 			}
 		});
+
+
 		let data = await res.json();
 		console.log('ACTIVITIES' + data.activities);
 		if (data && data.activities) {
 			allActivities = data.activities;
 		}
 	});
+
+
 
 	function addActivity() {
 		if (inputVal && activities) {
@@ -34,11 +48,16 @@
 		}
 	}
 
+
+
+
 	function removeActivity(item: string) {
 		if (activities) {
 			activities = activities.filter((activity) => activity !== item);
 		}
 	}
+
+
 
 	$: filteredItems = allActivities.filter(function (activity) {
 		return (
@@ -47,6 +66,9 @@
 		);
 	});
 </script>
+
+
+
 
 <div class="relative">
 	<div class="flex gap-2">
@@ -61,6 +83,9 @@
 					addActivity();
 				}
 			}}
+
+
+
 		/>
 		<button type="button" class="btn btn-neutral" on:click={addActivity}>Add</button>
 	</div>
@@ -68,6 +93,9 @@
 		<ul class="absolute z-10 w-full bg-base-100 shadow-lg max-h-60 overflow-auto">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			{#each filteredItems as item}
+
+
+
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 				<li
@@ -76,13 +104,22 @@
 						inputVal = item;
 						addActivity();
 					}}
+
+
+
 				>
+
+
+
 					{item}
 				</li>
 			{/each}
 		</ul>
 	{/if}
 </div>
+
+
+
 
 <div class="mt-2">
 	<ul class="space-y-2">
