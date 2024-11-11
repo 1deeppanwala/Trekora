@@ -6,10 +6,12 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
+    
     dependencies = [
         ('worldtravel', '0004_country_geometry'),
     ]
 
+    
     operations = [
         migrations.RemoveField(
             model_name='country',
