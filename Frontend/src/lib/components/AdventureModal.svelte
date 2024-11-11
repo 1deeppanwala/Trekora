@@ -2,9 +2,14 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Adventure, Collection, OpenStreetMapPlace, Point } from '$lib/types';
 	import { onMount } from 'svelte';
+
+
 	import { enhance } from '$app/forms';
 	import { addToast } from '$lib/toasts';
 	import { deserialize } from '$app/forms';
+
+
+
 
 	export let longitude: number | null = null;
 	export let latitude: number | null = null;
@@ -16,15 +21,24 @@
 	let places: OpenStreetMapPlace[] = [];
 	let images: { id: string; image: string }[] = [];
 	let warningMessage: string = '';
+
+
+
 	let constrainDates: boolean = false;
 
 	import ActivityComplete from './ActivityComplete.svelte';
 	import { appVersion } from '$lib/config';
 	import { ADVENTURE_TYPES } from '$lib';
 
+
+
+
 	let wikiError: string = '';
 
 	let noPlaces: boolean = false;
+
+
+
 
 	let adventure: Adventure = {
 		id: '',
@@ -40,9 +54,15 @@
 		longitude: NaN,
 		location: null,
 		images: [],
+
+
+
 		user_id: null,
 		collection: collection?.id || null
 	};
+
+
+
 
 	export let adventureToEdit: Adventure | null = null;
 
@@ -52,11 +72,15 @@
 		type: adventureToEdit?.type || 'general',
 		link: adventureToEdit?.link || null,
 		description: adventureToEdit?.description || null,
+
+
 		activity_types: adventureToEdit?.activity_types || [],
 		rating: adventureToEdit?.rating || NaN,
 		is_public: adventureToEdit?.is_public || false,
 		latitude: adventureToEdit?.latitude || NaN,
 		longitude: adventureToEdit?.longitude || NaN,
+
+
 		location: adventureToEdit?.location || null,
 		images: adventureToEdit?.images || [],
 		user_id: adventureToEdit?.user_id || null,
@@ -70,19 +94,27 @@
 	let imageError: string = '';
 	let wikiImageError: string = '';
 
+
+
 	images = adventure.images || [];
 
 	if (adventure.longitude && adventure.latitude) {
 		markers = [];
 		markers = [
+
+
 			{
 				lngLat: { lng: adventure.longitude, lat: adventure.latitude },
 				location: adventure.location || '',
 				name: adventure.name,
 				activity_type: ''
 			}
+
+
 		];
 	}
+
+
 
 	if (longitude && latitude) {
 		adventure.latitude = latitude;
@@ -90,15 +122,23 @@
 		reverseGeocode();
 	}
 
+
+
+
 	$: {
 		if (!adventure.rating) {
 			adventure.rating = NaN;
 		}
 	}
 
+
+
+
 	function clearMap() {
 		console.log('CLEAR');
 		markers = [];
+
+
 	}
 
 	let imageSearch: string = adventure.name || '';
@@ -108,6 +148,8 @@
 			method: 'POST'
 		});
 		if (res.status === 204) {
+
+
 			images = images.filter((image) => image.id !== id);
 			adventure.images = images;
 			console.log(images);
@@ -124,16 +166,27 @@
 		close();
 	}
 
+
+
+
 	$: if (markers.length > 0) {
 		adventure.latitude = Math.round(markers[0].lngLat.lat * 1e6) / 1e6;
 		adventure.longitude = Math.round(markers[0].lngLat.lng * 1e6) / 1e6;
 		if (!adventure.location) {
 			adventure.location = markers[0].location;
 		}
+
+
+
+
+
 		if (!adventure.name) {
 			adventure.name = markers[0].name;
 		}
 	}
+
+
+
 
 	async function fetchImage() {
 		let res = await fetch(url);
@@ -141,11 +194,16 @@
 		if (!data) {
 			imageError = 'No image found at that URL.';
 			return;
+
+
+
 		}
 		let file = new File([data], 'image.jpg', { type: 'image/jpeg' });
 		let formData = new FormData();
 		formData.append('image', file);
 		formData.append('adventure', adventure.id);
+
+
 		let res2 = await fetch(`/adventures?/image`, {
 			method: 'POST',
 			body: formData
@@ -161,6 +219,9 @@
 		}
 	}
 
+
+
+
 	async function fetchWikiImage() {
 		let res = await fetch(`/api/generate/img/?name=${imageSearch}`);
 		let data = await res.json();
@@ -168,6 +229,9 @@
 			wikiImageError = 'Failed to fetch image';
 			return;
 		}
+
+
+
 		if (data.source) {
 			let imageUrl = data.source;
 			let res = await fetch(imageUrl);
@@ -180,6 +244,9 @@
 				method: 'POST',
 				body: formData
 			});
+
+
+
 			if (res2.ok) {
 				let newData = deserialize(await res2.text()) as { data: { id: string; image: string } };
 				console.log(newData);
@@ -192,6 +259,9 @@
 				addToast('error', 'Failed to upload image');
 				wikiImageError = 'Failed to upload image';
 			}
+
+
+
 		}
 	}
 	async function geocode(e: Event | null) {
@@ -202,11 +272,17 @@
 			alert('Please enter a location');
 			return;
 		}
+
+
+
 		let res = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=jsonv2`, {
 			headers: {
 				'User-Agent': `Trekora / ${appVersion} `
 			}
 		});
+
+
+
 		console.log(res);
 		let data = (await res.json()) as OpenStreetMapPlace[];
 		places = data;
@@ -217,6 +293,9 @@
 		}
 	}
 
+
+
+
 	let new_start_date: string = '';
 	let new_end_date: string = '';
 	let new_notes: string = '';
@@ -224,6 +303,9 @@
 		if (new_start_date && !new_end_date) {
 			new_end_date = new_start_date;
 		}
+
+
+
 		if (new_start_date > new_end_date) {
 			addToast('error', 'Start date must be before end date');
 			return;
@@ -236,6 +318,9 @@
 			addToast('error', 'Please enter a start date');
 			return;
 		}
+
+
+
 		adventure.visits = [
 			...adventure.visits,
 			{
@@ -244,11 +329,16 @@
 				notes: new_notes,
 				id: ''
 			}
+
+
+
 		];
 		new_start_date = '';
 		new_end_date = '';
 		new_notes = '';
 	}
+
+
 
 	async function reverseGeocode() {
 		let res = await fetch(
@@ -258,6 +348,9 @@
 					'User-Agent': `Trekora / ${appVersion} `
 				}
 			}
+
+
+
 		);
 		let data = (await res.json()) as OpenStreetMapPlace[];
 		if (data.length > 0) {
@@ -265,7 +358,10 @@
 			adventure.activity_types?.push(data[0]?.type || '');
 			adventure.location = data[0]?.display_name || '';
 			if (longitude && latitude) {
-				markers = [
+				
+
+
+markers = [
 					{
 						lngLat: { lng: longitude, lat: latitude },
 						location: data[0]?.display_name || '',
@@ -274,6 +370,9 @@
 					}
 				];
 			}
+
+
+
 		}
 		console.log(data);
 	}
@@ -289,6 +388,9 @@
 		console.log('open');
 	});
 
+
+
+
 	function close() {
 		dispatch('close');
 	}
@@ -298,6 +400,9 @@
 			close();
 		}
 	}
+
+
+
 
 	async function generateDesc() {
 		let res = await fetch(`/api/generate/desc/?name=${adventure.name}`);
@@ -325,6 +430,9 @@
 	}
 
 	function imageSubmit() {
+
+
+
 		return async ({ result }: any) => {
 			if (result.type === 'success') {
 				if (result.data.id && result.data.image) {
@@ -341,6 +449,9 @@
 		};
 	}
 
+
+
+
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
 		console.log(adventure);
@@ -352,6 +463,9 @@
 				},
 				body: JSON.stringify(adventure)
 			});
+
+
+
 			let data = await res.json();
 			if (data.id) {
 				adventure = data as Adventure;
@@ -363,11 +477,17 @@
 				addToast('error', 'Failed to create adventure');
 			}
 		} else {
+
+
+
 			let res = await fetch(`/api/adventures/${adventure.id}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
 				},
+
+
+
 				body: JSON.stringify(adventure)
 			});
 			let data = await res.json();
@@ -382,6 +502,9 @@
 			}
 		}
 	}
+
+
+
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -392,6 +515,9 @@
 		<h3 class="font-bold text-2xl">
 			{adventureToEdit ? 'Edit Adventure' : 'New Adventure'}
 		</h3>
+
+
+
 		{#if adventure.id === '' || isDetails}
 			<div class="modal-action items-center">
 				<form method="post" style="width: 100%;" on:submit={handleSubmit}>
@@ -402,7 +528,10 @@
 						<div class="collapse-title text-xl font-medium">Basic Information</div>
 						<div class="collapse-content">
 							<div>
-								<label for="name">Name</label><br />
+								
+
+
+<label for="name">Name</label><br />
 								<input
 									type="text"
 									id="name"
@@ -429,7 +558,10 @@
 									max="5"
 									hidden
 									bind:value={adventure.rating}
-									id="rating"
+								
+
+
+id="rating"
 									name="rating"
 									class="input input-bordered w-full max-w-xs mt-1"
 								/>
@@ -457,7 +589,10 @@
 									<input
 										type="radio"
 										name="rating-2"
-										class="mask mask-star-2 bg-orange-400"
+									
+
+
+class="mask mask-star-2 bg-orange-400"
 										on:click={() => (adventure.rating = 3)}
 										checked={adventure.rating === 3}
 									/>
@@ -470,7 +605,9 @@
 									/>
 									<input
 										type="radio"
-										name="rating-2"
+								
+
+name="rating-2"
 										class="mask mask-star-2 bg-orange-400"
 										on:click={() => (adventure.rating = 5)}
 										checked={adventure.rating === 5}
@@ -504,7 +641,10 @@
 									id="description"
 									name="description"
 									bind:value={adventure.description}
-									class="textarea textarea-bordered w-full h-32"
+							
+
+
+class="textarea textarea-bordered w-full h-32"
 								></textarea>
 								<div class="mt-2">
 									<div
@@ -537,6 +677,8 @@
 						</div>
 					</div>
 
+
+
 					<div class="collapse collapse-plus bg-base-200 mb-4">
 						<input type="checkbox" />
 						<div class="collapse-title text-xl font-medium">Location Information</div>
@@ -553,7 +695,10 @@
 								/>
 							</div>
 							<div>
-								<form on:submit={geocode} class="mt-2">
+				
+
+
+<form on:submit={geocode} class="mt-2">
 									<input
 										type="text"
 										placeholder="Seach for a location"
