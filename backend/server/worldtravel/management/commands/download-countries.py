@@ -7,9 +7,11 @@ import json
 
 from django.conf import settings
 
+
 COUNTRY_REGION_JSON_VERSION = settings.COUNTRY_REGION_JSON_VERSION
         
 media_root = settings.MEDIA_ROOT
+
 
 def saveCountryFlag(country_code):
     # For standards, use the lowercase country_code
@@ -47,6 +49,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(self.style.ERROR('Error downloading countries+regions.json'))
                 return
+
             
         with open(countries_json_path, 'r') as f:
             data = json.load(f)
