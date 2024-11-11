@@ -34,7 +34,7 @@ export const load = (async (event) => {
 
 	let osmRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=jsonv2`, {
 		headers: {
-			'User-Agent': `AdventureLog / ${appVersion} `
+			'User-Agent': `Trekora / ${appVersion} `
 		}
 	});
 

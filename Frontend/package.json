@@ -1,5 +1,5 @@
 {
-	"name": "adventurelog-frontend",
+	"name": "Trekora-frontend",
 	"version": "0.7.0",
 	"scripts": {
 		"start": "vite dev",
