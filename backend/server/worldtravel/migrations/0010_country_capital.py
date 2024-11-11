@@ -9,6 +9,7 @@ class Migration(migrations.Migration):
         ('worldtravel', '0009_alter_country_country_code'),
     ]
 
+    
     operations = [
         migrations.AddField(
             model_name='country',
