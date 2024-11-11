@@ -12,10 +12,12 @@ class CountrySerializer(serializers.ModelSerializer):
         public_url = self.get_public_url(obj)
         return public_url + '/media/' + 'flags/' + obj.country_code.lower() + '.png'
 
+    
     class Meta:
         model = Country
         fields = '__all__'
         read_only_fields = ['id', 'name', 'country_code', 'subregion', 'flag_url']
+
 
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,11 +25,13 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['id', 'name', 'country', 'longitude', 'latitude']
 
+
 class VisitedRegionSerializer(serializers.ModelSerializer):
     longitude = serializers.DecimalField(source='region.longitude', max_digits=9, decimal_places=6, read_only=True)
     latitude = serializers.DecimalField(source='region.latitude', max_digits=9, decimal_places=6, read_only=True)
     name = serializers.CharField(source='region.name', read_only=True)
 
+    
     class Meta:
         model = VisitedRegion
         fields = ['id', 'user_id', 'region', 'longitude', 'latitude', 'name']
