@@ -8,6 +8,9 @@
 	import ArchiveArrowDown from '~icons/mdi/archive-arrow-down';
 	import ArchiveArrowUp from '~icons/mdi/archive-arrow-up';
 
+
+
+
 	import { goto } from '$app/navigation';
 	import type { Adventure, Collection } from '$lib/types';
 	import { addToast } from '$lib/toasts';
@@ -16,6 +19,11 @@
 	import DotsHorizontal from '~icons/mdi/dots-horizontal';
 	import TrashCan from '~icons/mdi/trashcan';
 	import DeleteWarning from './DeleteWarning.svelte';
+
+
+
+
+
 	import ShareModal from './ShareModal.svelte';
 	import CardCarousel from './CardCarousel.svelte';
 
@@ -24,6 +32,8 @@
 	export let type: String | undefined | null;
 	export let adventures: Adventure[] = [];
 	let isShareModalOpen: boolean = false;
+
+
 
 	function editAdventure() {
 		dispatch('edit', collection);
