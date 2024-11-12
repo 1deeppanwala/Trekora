@@ -5,6 +5,7 @@ from allauth.account.forms import default_token_generator
 from allauth.account import app_settings
 from django.conf import settings
 
+
 from allauth.account.forms import ResetPasswordForm as AllAuthPasswordResetForm
 
 class CustomAllAuthPasswordResetForm(AllAuthPasswordResetForm):
@@ -44,6 +45,7 @@ class CustomAllAuthPasswordResetForm(AllAuthPasswordResetForm):
                 'user_pk': user_pk_to_url_str(user),
             }
 
+            
             if app_settings.AUTHENTICATION_METHOD != app_settings.AuthenticationMethod.EMAIL:
                 context['username'] = user_username(user)
             get_adapter(request).send_mail(
