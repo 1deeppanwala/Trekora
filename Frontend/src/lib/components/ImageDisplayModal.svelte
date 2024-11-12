@@ -5,27 +5,42 @@
 	let modal: HTMLDialogElement;
 	import type { Adventure } from '$lib/types';
 
+
+
+
 	export let image: string;
 	export let adventure: Adventure | null = null;
 
 	onMount(() => {
+
+
+
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
 		if (modal) {
 			modal.showModal();
-		}
+		
+
+
+
 	});
 
 	function close() {
+
+
 		dispatch('close');
 		if (modal) {
 			modal.close();
 		}
 	}
 
+
+
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
 			close();
 		}
+
+
 	}
 
 	function handleClickOutside(event: MouseEvent) {
