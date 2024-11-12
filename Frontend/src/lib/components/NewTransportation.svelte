@@ -13,6 +13,9 @@
 	// 	to_location: null,
 	// 	is_public: false,
 	// 	collection: null,
+
+
+
 	// 	created_at: '',
 	// 	updated_at: ''
 	// };
@@ -21,6 +24,9 @@
 	const dispatch = createEventDispatcher();
 	import { onMount } from 'svelte';
 	import { addToast } from '$lib/toasts';
+
+
+
 	let modal: HTMLDialogElement;
 
 	export let collection: Collection;
@@ -46,6 +52,8 @@
 
 	let type: string = '';
 
+
+
 	onMount(async () => {
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
 		if (modal) {
@@ -58,7 +66,9 @@
 	// }
 
 	function close() {
-		dispatch('close');
+
+
+dispatch('close');
 	}
 
 	function handleKeydown(event: KeyboardEvent) {
@@ -68,7 +78,10 @@
 	}
 
 	async function handleSubmit(event: Event) {
-		event.preventDefault();
+
+
+
+event.preventDefault();
 		const form = event.target as HTMLFormElement;
 		const formData = new FormData(form);
 
@@ -82,6 +95,9 @@
 			method: 'POST',
 			body: formData
 		});
+
+
+
 
 		if (response.ok) {
 			const result = await response.json();
@@ -98,7 +114,10 @@
 <dialog id="my_modal_1" class="modal">
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-	<div class="modal-box" role="dialog" on:keydown={handleKeydown} tabindex="0">
+
+
+
+<div class="modal-box" role="dialog" on:keydown={handleKeydown} tabindex="0">
 		<h3 class="font-bold text-lg">New Transportation</h3>
 		<div
 			class="modal-action items-center"
@@ -106,7 +125,10 @@
 		>
 			<form method="post" style="width: 100%;" on:submit={handleSubmit}>
 				<div class="mb-2">
-					<!-- <input
+
+
+
+<!-- <input
 						type="text"
 						id="id"
 						name="id"
@@ -114,19 +136,28 @@
 						readonly
 						bind:value={newTransportation.id}
 						class="input input-bordered w-full max-w-xs mt-1"
-					/> -->
+
+
+
+/> -->
 					<input
 						type="text"
 						id="collection"
 						name="collection"
 						hidden
 						readonly
-						bind:value={collection.id}
+
+
+
+bind:value={collection.id}
 						class="input input-bordered w-full max-w-xs mt-1"
 					/>
 					<input
 						type="text"
-						id="is_public"
+
+
+
+id="is_public"
 						name="is_public"
 						hidden
 						readonly
@@ -137,7 +168,10 @@
 						<label for="type">Type <PlaneCar class="inline-block mb-1 w-6 h-6" /></label><br />
 						<select
 							class="select select-bordered w-full max-w-xs"
-							name="type"
+
+
+
+name="type"
 							id="type"
 							bind:value={type}
 						>
@@ -149,7 +183,10 @@
 							<option value="boat">Boat</option>
 							<option value="bike">Bike</option>
 							<option value="walking">Walking</option>
-							<option value="other">Other</option>
+
+
+
+<option value="other">Other</option>
 						</select>
 					</div>
 
@@ -159,7 +196,10 @@
 						name="name"
 						id="name"
 						class="input input-bordered w-full max-w-xs mt-1"
-					/>
+
+
+
+/>
 				</div>
 				<div class="mb-2">
 					<label for="date">Description <Notebook class="inline-block -mt-1 mb-1 w-6 h-6" /></label
@@ -169,7 +209,10 @@
 							type="text"
 							id="description"
 							name="description"
-							class="input input-bordered w-full max-w-xs mt-1 mb-2"
+
+
+
+class="input input-bordered w-full max-w-xs mt-1 mb-2"
 						/>
 					</div>
 					<div class="mb-2">
@@ -178,7 +221,11 @@
 						><br />
 						<input
 							type="datetime-local"
-							id="date"
+
+
+
+
+id="date"
 							name="date"
 							min={fullStartDate || ''}
 							max={fullEndDate || ''}
@@ -186,17 +233,26 @@
 						/>
 					</div>
 
+
+
+
 					<div class="mb-2">
 						<label for="end_date"
 							>End Date & Time <Calendar class="inline-block mb-1 w-6 h-6" /></label
 						><br />
 						<input
 							type="datetime-local"
-							id="end_date"
+
+
+
+id="end_date"
 							name="end_date"
 							min={fullStartDate || ''}
 							max={fullEndDate || ''}
-							class="input input-bordered w-full max-w-xs mt-1"
+
+
+
+class="input input-bordered w-full max-w-xs mt-1"
 						/>
 					</div>
 
@@ -207,11 +263,17 @@
 							max="5"
 							min="0"
 							id="rating"
-							name="rating"
+
+
+
+name="rating"
 							class="input input-bordered w-full max-w-xs mt-1"
 						/>
 					</div>
-					<div class="mb-2">
+
+
+
+<div class="mb-2">
 						<label for="rating">Link <LinkVariant class="inline-block mb-1 w-6 h-6" /></label><br />
 						<input
 							type="url"
@@ -221,25 +283,37 @@
 						/>
 					</div>
 
-					{#if type == 'plane'}
+
+
+
+{#if type == 'plane'}
 						<div class="mb-2">
 							<label for="flight_number"
 								>Flight Number <Airplane class="inline-block mb-1 w-6 h-6" /></label
 							><br />
 							<input
 								type="text"
-								id="flight_number"
+
+
+
+id="flight_number"
 								name="flight_number"
 								class="input input-bordered w-full max-w-xs mt-1"
 							/>
 						</div>
 					{/if}
-					<div class="mb-2">
+
+
+
+<div class="mb-2">
 						<label for="rating">From Location <MapMarker class="inline-block mb-1 w-6 h-6" /></label
 						><br />
 						<input
 							type="text"
-							id="from_location"
+
+
+
+id="from_location"
 							name="from_location"
 							class="input input-bordered w-full max-w-xs mt-1"
 						/>
