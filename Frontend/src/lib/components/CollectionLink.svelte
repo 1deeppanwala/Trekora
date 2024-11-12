@@ -8,6 +8,9 @@
 
 	let collections: Collection[] = [];
 
+
+
+
 	onMount(async () => {
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
 		if (modal) {
@@ -17,6 +20,9 @@
 			method: 'GET'
 		});
 
+
+
+
 		let result = await res.json();
 		collections = result as Collection[];
 
@@ -24,6 +30,9 @@
 			collections = result.data.adventures as Collection[];
 		}
 	});
+
+
+
 
 	function close() {
 		dispatch('close');
@@ -33,12 +42,18 @@
 		dispatch('link', event.detail);
 	}
 
+
+
+
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
 			dispatch('close');
 		}
 	}
 </script>
+
+
+
 
 <dialog id="my_modal_1" class="modal">
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
