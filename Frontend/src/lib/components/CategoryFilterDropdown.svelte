@@ -6,6 +6,9 @@
 	export let types: string;
 
 	onMount(() => {
+
+
+
 		console.log(types);
 		types_arr = types.split(',');
 	});
@@ -14,6 +17,8 @@
 		types = '';
 		types_arr = [];
 	}
+
+
 
 	function toggleSelect(type: string) {
 		if (types_arr.includes(type)) {
@@ -24,6 +29,9 @@
 		types = types_arr.join(',');
 		console.log(types);
 		console.log(types_arr);
+
+
+
 	}
 </script>
 
@@ -36,6 +44,9 @@
 			<li>
 				<label class="cursor-pointer">
 					<input
+
+
+
 						type="checkbox"
 						value={type.label}
 						on:change={() => toggleSelect(type.type)}
