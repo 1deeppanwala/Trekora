@@ -9,6 +9,9 @@
 
 	let newCollection: Collection = {
 		user_id: NaN,
+
+
+
 		id: '',
 		name: '',
 		description: '',
@@ -16,10 +19,16 @@
 		is_public: false,
 		shared_with: [],
 		link: ''
+
+
+
 	};
 
 	const dispatch = createEventDispatcher();
 	let modal: HTMLDialogElement;
+
+
+
 
 	onMount(async () => {
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
@@ -27,6 +36,9 @@
 			modal.showModal();
 		}
 	});
+
+
+
 
 	function close() {
 		dispatch('close');
