@@ -5,11 +5,16 @@
 	import { onMount } from 'svelte';
 	let modal: HTMLDialogElement;
 
+
+
+
 	let url: string = '';
 
 	export let name: string | null = null;
 
 	let error = '';
+
+
 
 	onMount(() => {
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
@@ -18,6 +23,8 @@
 		}
 	});
 
+
+
 	async function fetchImage() {
 		let res = await fetch(url);
 		let data = await res.blob();
@@ -25,6 +32,9 @@
 			error = 'No image found at that URL.';
 			return;
 		}
+
+
+
 		let file = new File([data], 'image.jpg', { type: 'image/jpeg' });
 		close();
 		dispatch('image', { file });
