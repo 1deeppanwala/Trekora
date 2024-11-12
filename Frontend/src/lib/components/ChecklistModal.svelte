@@ -6,6 +6,9 @@
 	import { onMount } from 'svelte';
 	let modal: HTMLDialogElement;
 
+
+
+
 	export let checklist: Checklist | null = null;
 	export let collection: Collection;
 	export let user: User | null = null;
@@ -15,6 +18,9 @@
 	items = checklist?.items || [];
 
 	let warning: string | null = '';
+
+
+
 
 	let newStatus: boolean = false;
 	let newItem: string = '';
@@ -29,6 +35,9 @@
 			return;
 		}
 		items = [
+
+
+
 			...items,
 			{
 				name: newItem,
@@ -41,12 +50,16 @@
 			}
 		];
 
+
+
 		newChecklist.items = items;
 
 		newItem = '';
 		newStatus = false;
 		warning = '';
 	}
+
+
 
 	let newChecklist = {
 		name: checklist?.name || '',
@@ -55,6 +68,8 @@
 		collection: collection.id,
 		is_public: collection.is_public
 	};
+
+
 
 	let initialName: string = checklist?.name || '';
 
@@ -65,14 +80,22 @@
 		}
 	});
 
+
+
 	function close() {
 		dispatch('close');
 	}
+
+
+
 
 	function removeItem(i: number) {
 		items = items.filter((_, index) => index !== i);
 		newChecklist.items = items;
 	}
+
+
+
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
@@ -80,11 +103,16 @@
 		}
 	}
 
+
+
+
 	async function save() {
 		// handles empty date
 		if (newChecklist.date == '') {
 			newChecklist.date = null;
 		}
+
+
 
 		if (checklist && checklist.id) {
 			console.log('newNote', newChecklist);
@@ -95,6 +123,9 @@
 				},
 				body: JSON.stringify(newChecklist)
 			});
+
+
+
 			if (res.ok) {
 				let data = await res.json();
 				if (data) {
@@ -104,6 +135,8 @@
 				console.error('Failed to save checklist');
 			}
 		} else {
+
+
 			console.log('newNote', newChecklist);
 			const res = await fetch(`/api/checklists/`, {
 				method: 'POST',
@@ -125,6 +158,9 @@
 		}
 	}
 </script>
+
+
+
 
 <dialog id="my_modal_1" class="modal">
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
