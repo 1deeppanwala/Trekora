@@ -4,6 +4,9 @@
 	import type { Transportation } from '$lib/types';
 	const dispatch = createEventDispatcher();
 	import { onMount } from 'svelte';
+
+
+
 	import { addToast } from '$lib/toasts';
 	let modal: HTMLDialogElement;
 
@@ -12,7 +15,13 @@
 	let originalName = transportationToEdit.name;
 
 	export let startDate: string | null = null;
+
+
+
 	export let endDate: string | null = null;
+
+
+
 
 	let fullStartDate: string = '';
 	let fullEndDate: string = '';
@@ -21,6 +30,9 @@
 		fullStartDate = `${startDate}T00:00`;
 		fullEndDate = `${endDate}T23:59`;
 	}
+
+
+
 
 	import MapMarker from '~icons/mdi/map-marker';
 	import Calendar from '~icons/mdi/calendar';
