@@ -10,15 +10,27 @@
 	import Forest from '~icons/mdi/forest';
 	import Flower from '~icons/mdi/flower';
 	import Water from '~icons/mdi/water';
+
+
+
 	import AboutModal from './AboutModal.svelte';
 	import AccountMultiple from '~icons/mdi/account-multiple';
 	import Avatar from './Avatar.svelte';
 	import PaletteOutline from '~icons/mdi/palette-outline';
+
+
+
 	import { page } from '$app/stores';
 
 	let query: string = '';
 
 	let isAboutModalOpen: boolean = false;
+
+
+
+
+
+
 
 	const submitUpdateTheme: SubmitFunction = ({ action }) => {
 		const theme = action.searchParams.get('theme');
@@ -28,11 +40,20 @@
 		}
 	};
 
+
+
+
 	const searchGo = async (e: Event) => {
+
+
+
 		e.preventDefault();
 
 		if ($page.url.pathname === '/search') {
 			let url = new URL(window.location.href);
+
+
+
 			url.searchParams.set('query', query);
 			goto(url.toString(), { invalidateAll: true });
 		}
@@ -48,15 +69,24 @@
 {/if}
 
 <div class="navbar bg-base-100">
+
+
+
 	<div class="navbar-start">
 		<div class="dropdown">
 			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
 				<svg
+
+
+
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
+
+
+
 					><path
 						stroke-linecap="round"
 						stroke-linejoin="round"
