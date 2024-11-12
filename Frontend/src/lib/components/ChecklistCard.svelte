@@ -6,6 +6,9 @@
 
 	import Launch from '~icons/mdi/launch';
 	import TrashCan from '~icons/mdi/trash-can';
+
+
+
 	import Calendar from '~icons/mdi/calendar';
 
 	export let checklist: Checklist;
@@ -14,12 +17,18 @@
 
 	function editChecklist() {
 		dispatch('edit', checklist);
+
+
+
 	}
 
 	async function deleteChecklist() {
 		const res = await fetch(`/api/checklists/${checklist.id}`, {
 			method: 'DELETE'
 		});
+
+
+
 		if (res.ok) {
 			addToast('success', 'Checklist deleted successfully');
 			dispatch('delete', checklist.id);
@@ -29,6 +38,9 @@
 	}
 </script>
 
+
+
+
 <div
 	class="card w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md bg-neutral text-neutral-content shadow-xl overflow-hidden"
 >
@@ -36,6 +48,9 @@
 		<div class="flex justify-between">
 			<h2 class="text-2xl font-semibold -mt-2 break-words text-wrap">
 				{checklist.name}
+
+
+
 			</h2>
 		</div>
 		<div class="badge badge-primary">Checklist</div>
@@ -44,6 +59,9 @@
 		{/if}
 		{#if checklist.date && checklist.date !== ''}
 			<div class="inline-flex items-center">
+
+
+
 				<Calendar class="w-5 h-5 mr-1" />
 				<p>{new Date(checklist.date).toLocaleDateString(undefined, { timeZone: 'UTC' })}</p>
 			</div>
@@ -52,6 +70,9 @@
 			<!-- <button class="btn btn-neutral mb-2" on:click={() => goto(`/notes/${note.id}`)}
 				><Launch class="w-6 h-6" />Open Details</button
 			> -->
+
+
+
 			<button class="btn btn-neutral-200 mb-2" on:click={editChecklist}>
 				<Launch class="w-6 h-6" />Open
 			</button>
