@@ -9,6 +9,9 @@
 
 	export let country: Country;
 
+
+
+
 	async function nav() {
 		goto(`/worldtravel/${country.country_code}`);
 	}
@@ -18,6 +21,9 @@
 	class="card w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md bg-neutral text-neutral-content shadow-xl overflow-hidden"
 >
 	<figure>
+
+
+
 		<!-- svelte-ignore a11y-img-redundant-alt -->
 		<img src={country.flag_url} alt="No image available" class="w-full h-48 object-cover" />
 	</figure>
@@ -27,6 +33,9 @@
 			<div class="badge badge-primary">{country.subregion}</div>
 		{/if}
 		{#if country.capital}
+
+
+
 			<div class="badge badge-secondary"><MapMarkerStar class="-ml-1 mr-1" />{country.capital}</div>
 		{/if}
 		<div class="card-actions justify-end">
