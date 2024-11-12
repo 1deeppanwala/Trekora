@@ -1,6 +1,8 @@
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 const PUBLIC_SERVER_URL = process.env['PUBLIC_SERVER_URL'];
+
+
 import { fetchCSRFToken, tryRefreshToken } from '$lib/index.server';
 
 export const authHook: Handle = async ({ event, resolve }) => {
@@ -8,6 +10,9 @@ export const authHook: Handle = async ({ event, resolve }) => {
 		let authCookie = event.cookies.get('auth');
 		let refreshCookie = event.cookies.get('refresh');
 
+
+
+		
 		if (!authCookie && !refreshCookie) {
 			event.locals.user = null;
 			return await resolve(event);
@@ -17,6 +22,9 @@ export const authHook: Handle = async ({ event, resolve }) => {
 			event.locals.user = null;
 			const token = await tryRefreshToken(event.cookies.get('refresh') || '');
 			if (token) {
+		
+				
+				
 				authCookie = token;
 				event.cookies.set('auth', authCookie, {
 					httpOnly: true,
@@ -33,6 +41,9 @@ export const authHook: Handle = async ({ event, resolve }) => {
 
 		let userFetch = await event.fetch(`${serverEndpoint}/auth/user/`, {
 			headers: {
+				
+				
+				
 				Cookie: `${authCookie}`
 			}
 		});
