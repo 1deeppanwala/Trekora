@@ -3,30 +3,45 @@
 	import type { Adventure, OpenStreetMapPlace, Point } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
-	import { onMount } from 'svelte';
+	
+
+
+import { onMount } from 'svelte';
 	let modal: HTMLDialogElement;
 	import { appVersion } from '$lib/config';
 
-	import { DefaultMarker, MapEvents, MapLibre, Popup } from 'svelte-maplibre';
+
+
+
+import { DefaultMarker, MapEvents, MapLibre, Popup } from 'svelte-maplibre';
 
 	let markers: Point[] = [];
 
 	export let query: string | null = null;
 	export let adventure: Adventure;
 
+
+
+
 	if (query) {
 		geocode();
 	}
 
 	function addMarker(e: CustomEvent<MouseEvent>) {
-		markers = [];
+
+
+
+markers = [];
 		markers = [...markers, { lngLat: e.detail.lngLat, name: '' }];
 		console.log(markers);
 	}
 
 	onMount(() => {
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
-		if (modal) {
+
+
+
+if (modal) {
 			modal.showModal();
 		}
 		if (adventure.longitude && adventure.latitude) {
@@ -35,14 +50,20 @@
 					lngLat: { lng: adventure.longitude, lat: adventure.latitude },
 					name: adventure.name,
 					location: adventure.location
-				}
+
+
+
+}
 			];
 		}
 	});
 
 	function close() {
 		dispatch('close');
-	}
+
+
+
+}
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
@@ -50,30 +71,59 @@
 		}
 	}
 
+
+
+
+
 	let places: OpenStreetMapPlace[] = [];
 
 	async function geocode(e: Event | null) {
 		if (e) {
-			e.preventDefault();
+
+
+
+
+e.preventDefault();
 		}
 		if (!query) {
 			alert('Please enter a location');
 			return;
 		}
 		let res = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=jsonv2`, {
-			headers: {
+
+
+
+
+headers: {
 				'User-Agent': `Trekora / ${appVersion} `
 			}
 		});
 		console.log(res);
-		let data = (await res.json()) as OpenStreetMapPlace[];
+
+
+
+
+
+let data = (await res.json()) as OpenStreetMapPlace[];
 		places = data;
 	}
 
 	function submit() {
 		if (markers.length === 0) {
 			alert('Please select a point on the map');
-			return;
+
+
+
+
+
+
+
+
+
+
+
+
+return;
 		}
 
 		console.log(markers[0]);
