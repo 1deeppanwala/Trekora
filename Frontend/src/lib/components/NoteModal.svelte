@@ -3,25 +3,36 @@
 	import type { Collection, Note, User } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
-	import { onMount } from 'svelte';
+	
+
+
+
+import { onMount } from 'svelte';
 	import ShareModal from './ShareModal.svelte';
 	let modal: HTMLDialogElement;
 
 	export let note: Note | null = null;
 	export let collection: Collection;
-	export let user: User | null = null;
+	
+
+export let user: User | null = null;
 
 	let warning: string | null = '';
 
 	let newLink: string = '';
 
-	function addLink() {
+
+
+function addLink() {
 		// check to make it a valid URL
 		if (!isValidUrl(newLink)) {
 			warning = 'Invalid URL';
 			return;
 		} else {
-			warning = null;
+
+
+
+warning = null;
 		}
 
 		if (newLink.trim().length > 0) {
@@ -32,7 +43,10 @@
 	}
 
 	let newNote = {
-		name: note?.name || '',
+
+
+
+name: note?.name || '',
 		content: note?.content || '',
 		date: note?.date || undefined || null,
 		links: note?.links || [],
