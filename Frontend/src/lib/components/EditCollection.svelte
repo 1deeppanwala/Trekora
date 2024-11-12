@@ -12,6 +12,8 @@
 	let originalName = collectionToEdit.name;
 
 	import Calendar from '~icons/mdi/calendar';
+
+
 	import Notebook from '~icons/mdi/notebook';
 	import Earth from '~icons/mdi/earth';
 
@@ -19,6 +21,9 @@
 		modal = document.getElementById('my_modal_1') as HTMLDialogElement;
 		if (modal) {
 			modal.showModal();
+
+
+
 		}
 	});
 
@@ -35,6 +40,12 @@
 	}
 
 	async function handleSubmit(event: Event) {
+
+
+
+
+
+
 		event.preventDefault();
 		const form = event.target as HTMLFormElement;
 		const formData = new FormData(form);
@@ -47,6 +58,9 @@
 		}
 		if (collectionToEdit.end_date && !collectionToEdit.start_date) {
 			addToast('error', 'Please provide a start date');
+
+
+
 			return;
 		}
 
@@ -75,6 +89,9 @@
 			}
 		}
 	}
+
+
+
 </script>
 
 <dialog id="my_modal_1" class="modal">
