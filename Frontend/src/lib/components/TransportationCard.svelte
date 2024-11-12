@@ -2,12 +2,17 @@
 	import { createEventDispatcher } from 'svelte';
 	import TrashCanOutline from '~icons/mdi/trash-can-outline';
 	import FileDocumentEdit from '~icons/mdi/file-document-edit';
-	import type { Collection, Transportation, User } from '$lib/types';
+	
+
+import type { Collection, Transportation, User } from '$lib/types';
 	import { addToast } from '$lib/toasts';
 
 	import ArrowDownThick from '~icons/mdi/arrow-down-thick';
 
 	const dispatch = createEventDispatcher();
+
+
+
 
 	export let transportation: Transportation;
 	export let user: User | null = null;
@@ -21,7 +26,10 @@
 		let res = await fetch(`/api/transportations/${transportation.id}`, {
 			method: 'DELETE',
 			headers: {
-				'Content-Type': 'application/json'
+
+
+
+'Content-Type': 'application/json'
 			}
 		});
 		if (!res.ok) {
@@ -29,13 +37,19 @@
 		} else {
 			console.log('Collection deleted');
 			addToast('info', 'Transportation deleted successfully!');
-			dispatch('delete', transportation.id);
+
+
+
+dispatch('delete', transportation.id);
 		}
 	}
 </script>
 
 <div
-	class="card w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md bg-neutral text-neutral-content shadow-xl"
+
+
+
+class="card w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md bg-neutral text-neutral-content shadow-xl"
 >
 	<div class="card-body">
 		<h2 class="card-title overflow-ellipsis">{transportation.name}</h2>
@@ -45,7 +59,10 @@
 				<p class="break-words text-wrap">{transportation.from_location}</p>
 			{/if}
 			{#if transportation.to_location}
-				<ArrowDownThick class="w-6 h-6" />
+
+
+
+<ArrowDownThick class="w-6 h-6" />
 				<p class="break-words text-wrap">{transportation.to_location}</p>
 			{/if}
 		</div>
