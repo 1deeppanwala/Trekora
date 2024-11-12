@@ -4,10 +4,19 @@
 	let toastList: any[] = [];
 
 	toasts.subscribe((value) => {
-		toastList = value;
+	
+
+
+
+
+
+toastList = value;
 		console.log(toastList);
 	});
-</script>
+</script
+
+
+
 
 <div class="toast toast-top mt-14 toast-end z-50 min-w-20">
 	{#each toastList as { type, message, id, duration }}
@@ -20,7 +29,10 @@
 			<div class="alert alert-error">
 				<span>{message}</span>
 			</div>
-		{/if}
+
+
+
+{/if}
 		{#if type == 'info'}
 			<div class="alert alert-info">
 				<span>{message}</span>
@@ -31,5 +43,9 @@
 				<span>{message}</span>
 			</div>
 		{/if}
-	{/each}
+
+
+
+
+{/each}
 </div>
