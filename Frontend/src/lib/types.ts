@@ -6,6 +6,9 @@ export type User = {
 	last_name: string | null;
 	date_joined: string | null;
 	is_staff: boolean;
+	
+	
+	
 	profile_pic: string | null;
 	uuid: string;
 	public_profile: boolean;
@@ -14,6 +17,9 @@ export type User = {
 export type Adventure = {
 	id: string;
 	user_id: number | null;
+	
+	
+	
 	type: string;
 	name: string;
 	location?: string | null;
