@@ -32,11 +32,11 @@ jobs:
       - name: Verify pnpm installation
         run: pnpm --version
 
-      # List files in Frontend directory to verify package.json is present
-      - name: List repository files in Frontend
+      # List files in the Frontend directory to verify that package.json exists
+      - name: List files in Frontend directory
         run: ls -R Frontend
 
-      # Install dependencies inside Frontend directory
+      # Install dependencies inside the Frontend directory
       - name: Install dependencies
         run: pnpm install
         working-directory: Frontend
@@ -51,6 +51,6 @@ jobs:
         run: pnpm run build
         working-directory: Frontend
 
-      # Verify Docker build inside Frontend
+      # Verify Docker build inside Frontend directory
       - name: Docker build
         run: docker build -t frontend-test-app -f Frontend/Dockerfile .
