@@ -58,6 +58,12 @@ jobs:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/trekora
       run: python backend/manage.py test
 
+    -- name: Install pnpm
+      run: npm install -g pnpm
+
+    - name: Install dependencies
+      run: pnpm install
+
     - name: Lint with flake8
       run: |
         pip install flake8
