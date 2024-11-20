@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3  # Updated to the latest major version
+    - uses: actions/checkout@v4  # Ensure you are using the latest version as of your current date
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4  # Updated to the latest major version
+      uses: actions/setup-node@v5  # Latest version, ensuring compatibility with Node 20
       with:
-        node-version: '20'  # Updated to the latest LTS version of Node.js
+        node-version: '20'  # Node.js 20, aligning with GitHub's environment updates
 
     - name: Install Dependencies
       run: npm install
