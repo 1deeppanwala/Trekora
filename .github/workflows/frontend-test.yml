@@ -24,33 +24,33 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      # Install pnpm globally using npm (even if npm is not explicitly required, it's usually already available)
+      # Install pnpm globally
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # Verify pnpm installation and check its version
+      # Verify pnpm installation
       - name: Verify pnpm installation
         run: pnpm --version
 
-      # Debugging step: List files to ensure correct structure
-      - name: List repository files
-        run: ls -R
+      # List files in Frontend directory to verify package.json is present
+      - name: List repository files in Frontend
+        run: ls -R Frontend
 
-      # Install dependencies in the Frontend directory (where package.json should be)
+      # Install dependencies inside Frontend directory
       - name: Install dependencies
         run: pnpm install
         working-directory: Frontend
 
-      # Run tests (if any)
+      # Run tests (if any) inside Frontend directory
       - name: Run tests
         run: pnpm test
         working-directory: Frontend
 
-      # Build the application
+      # Build the application inside Frontend directory
       - name: Build application
         run: pnpm run build
         working-directory: Frontend
 
-      # Verify Docker build
+      # Verify Docker build inside Frontend
       - name: Docker build
         run: docker build -t frontend-test-app -f Frontend/Dockerfile .
