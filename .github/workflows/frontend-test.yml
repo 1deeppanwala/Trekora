@@ -24,7 +24,7 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      # Install pnpm globally
+      # Install pnpm if it's not already installed
       - name: Install pnpm
         run: npm install -g pnpm
 
