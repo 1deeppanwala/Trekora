@@ -1,23 +1,26 @@
-# Use this image as the platform to build the app
+# Use Node.js Alpine image as base
 FROM node:18-alpine AS external-website
 
-# A small line inside the image to show who made it
+# Metadata
 LABEL Developers=""
 
-# The WORKDIR instruction sets the working directory for everything that will happen next
+# Set the working directory
 WORKDIR /app
 
-# Copy all local files into the image
-COPY . .
+# Copy package.json and pnpm-lock.yaml first to optimize caching
+COPY package.json pnpm-lock.yaml ./
 
-# Remove the development .env file if present
-RUN rm -f .env
-
-# Install pnpm
+# Install pnpm globally
 RUN npm install -g pnpm
 
-# Clean install all node modules using pnpm
+# Install dependencies
 RUN pnpm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Remove development .env file if present
+RUN rm -f .env
 
 # Build SvelteKit app
 RUN pnpm run build
@@ -25,11 +28,8 @@ RUN pnpm run build
 # Expose the port that the app is listening on
 EXPOSE 3000
 
-# Run the app
+# Grant execute permissions to the startup script
 RUN chmod +x ./startup.sh
 
-# The USER instruction sets the user name to use as the default user for the remainder of the current stage
-USER node:node
-
-# Run startup.sh instead of the default command
+# Run the app
 CMD ["./startup.sh"]
