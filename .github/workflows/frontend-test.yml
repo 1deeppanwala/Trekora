@@ -24,9 +24,13 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      # Install pnpm if it's not already installed
+      # Install pnpm globally
       - name: Install pnpm
         run: npm install -g pnpm
+
+      # Check if pnpm is installed successfully
+      - name: Verify pnpm installation
+        run: pnpm --version
 
       # Debugging step: List files to ensure correct structure
       - name: List repository files
