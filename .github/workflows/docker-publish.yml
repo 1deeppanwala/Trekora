@@ -1,78 +1,68 @@
-name: Docker
+name: Frontend Tests
 
 on:
-  schedule:
-    - cron: '21 19 * * *'
   push:
-    branches: [ "main" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
-env:
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+    branches:
+      - main
 
 jobs:
-  build:
+  test:
+    name: Run Frontend Tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
-      id-token: write
 
     steps:
-      - name: Checkout repository
+      # Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
+          node-version: 18
+          cache: 'pnpm'
 
-      - name: Debug: List files in Trekora/Frontend
-        run: ls -R Trekora/Frontend
+      # Install dependencies
+      - name: Install dependencies with pnpm
+        run: |
+          npm install -g pnpm
+          pnpm install
 
-      - name: Install cosign
-        if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@v3.5.0
-        with:
-          cosign-release: 'v2.2.4'
+      # Lint the code
+      - name: Run linter
+        run: pnpm lint
 
+      # Run unit tests
+      - name: Run unit tests
+        run: pnpm test
+
+      # Build the app
+      - name: Build the app
+        run: pnpm run build
+
+      # Test the Dockerfile
+  docker-build-test:
+    name: Test Dockerfile Build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Docker Buildx
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3
 
-      - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3.0.0
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # Build and test Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t frontend-test-app -f Frontend/Dockerfile .
+          docker run --rm -d -p 3000:3000 frontend-test-app
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5.0.0
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Build and push Docker image
-        id: build-and-push
-        uses: docker/build-push-action@v5.0.0
-        with:
-          context: Trekora/Frontend
-          file: Trekora/Frontend/Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+      # Ensure the app is running and accessible
+      - name: Check application health
+        run: curl --fail http://localhost:3000 || exit 1
