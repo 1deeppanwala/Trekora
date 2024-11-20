@@ -28,7 +28,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # Check if pnpm is installed successfully
+      # Verify pnpm installation
       - name: Verify pnpm installation
         run: pnpm --version
 
@@ -36,7 +36,7 @@ jobs:
       - name: List repository files
         run: ls -R
 
-      # Navigate to the Frontend directory and install dependencies
+      # Install dependencies in the Frontend directory (where package.json should be)
       - name: Install dependencies
         run: pnpm install
         working-directory: Frontend
@@ -54,7 +54,3 @@ jobs:
       # Verify Docker build
       - name: Docker build
         run: docker build -t frontend-test-app -f Frontend/Dockerfile .
-
-      - name: Check PATH
-  run: echo $PATH
-
