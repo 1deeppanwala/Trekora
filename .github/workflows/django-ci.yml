@@ -49,9 +49,13 @@ jobs:
       run: cp backend/server/.env.example backend/server/.env
 
     - name: Run migrations
+      env:
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/trekora
       run: python backend/manage.py migrate
 
     - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/trekora
       run: python backend/manage.py test
 
     - name: Lint with flake8
