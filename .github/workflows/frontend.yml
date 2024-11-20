@@ -1,11 +1,12 @@
-name: Deploy Trekora Frontend on Release
+
+name: Upload tagged release frontend image to GHCR and Docker Hub
 
 on:
   release:
     types: [released]
 
 env:
-  IMAGE_NAME: "trekora-frontend"  # Adjust the image name as needed
+  IMAGE_NAME: "adventurelog-frontend"
 
 jobs:
   upload:
@@ -33,11 +34,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Set lower case owner name
+      - name: set lower case owner name
         run: |
-          echo "REPO_OWNER=${OWNER,,}" >> $GITHUB_ENV
+          echo "REPO_OWNER=${OWNER,,}" >>${GITHUB_ENV}
         env:
           OWNER: "${{ github.repository_owner }}"
 
       - name: Build Docker images
-        run: docker buildx build --platform linux/amd64,linux/arm64 --push -t ghcr.io/$REPO_OWNER/$IMAGE_NAME:${{ github.event.release.tag_name }} -t ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:${{ github.event.release.tag_name }} ./Frontend
+        run: docker buildx build --platform linux/amd64,linux/arm64 --push -t ghcr.io/$REPO_OWNER/$IMAGE_NAME:${{ github.event.release.tag_name }} -t ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:${{ github.event.release.tag_name }} ./frontend
