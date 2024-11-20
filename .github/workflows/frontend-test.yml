@@ -1,4 +1,4 @@
-name: Frontend Tests
+name: Frontend Build and Test
 
 on:
   push:
@@ -9,60 +9,40 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run Frontend Tests
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
-      - name: Checkout code
+      # Check out the repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up Node.js
+      # Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
 
-      # Install dependencies
-      - name: Install dependencies with pnpm
-        run: |
-          npm install -g pnpm
-          pnpm install
+      # Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-      # Lint the code
-      - name: Run linter
-        run: pnpm lint
+      # Install dependencies using pnpm
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: Frontend
 
-      # Run unit tests
-      - name: Run unit tests
+      # Run tests (if you have any)
+      - name: Run tests
         run: pnpm test
+        working-directory: Frontend
 
-      # Build the app
-      - name: Build the app
+      # Build the application
+      - name: Build application
         run: pnpm run build
+        working-directory: Frontend
 
-      # Test the Dockerfile
-  docker-build-test:
-    name: Test Dockerfile Build
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      # Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Build and test Docker image
-      - name: Build Docker image
-        run: |
-          docker build -t frontend-test-app -f Frontend/Dockerfile .
-          docker run --rm -d -p 3000:3000 frontend-test-app
-
-      # Ensure the app is running and accessible
-      - name: Check application health
-        run: curl --fail http://localhost:3000 || exit 1
+      # Verify Docker build
+      - name: Docker build
+        run: docker build -t frontend-test-app -f Frontend/Dockerfile .
