@@ -3,28 +3,29 @@ name: Build SvelteKit Application
 on:
   push:
     branches:
-      - main  # This triggers the workflow on pushes to the main branch.
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Runs the job on the latest Ubuntu virtual environment.
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3  # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it.
+    - uses: actions/checkout@v3
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3  # Sets up a Node.js environment with the specified version.
+      uses: actions/setup-node@v3
       with:
-        node-version: '20.x'  # Use Node.js version 20, aligning with the current LTS version.
+        node-version: '20.x'
+        cache: 'npm'
 
     - name: Install Dependencies
-      run: npm install  # Installs dependencies defined in package.json.
+      run: npm install
+      working-directory: ./Frontend  # Adjust this path to where your package.json is located
 
     - name: Run Build
-      run: npm run build  # Builds your SvelteKit application.
+      run: npm run build
+      working-directory: ./Frontend  # Adjust this path to where your package.json is located
 
     - name: Run Tests
-      run: npm test  # Runs tests defined in your project.
-
-# Note: Ensure that all workflow syntax and properties are correctly set.
-# Always check the GitHub Actions documentation for the latest updates and practices.
+      run: npm test
+      working-directory: ./Frontend  # Adjust this path to where your package.json is located
