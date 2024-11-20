@@ -24,11 +24,11 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      # Install pnpm globally
+      # Install pnpm globally using npm (even if npm is not explicitly required, it's usually already available)
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # Verify pnpm installation
+      # Verify pnpm installation and check its version
       - name: Verify pnpm installation
         run: pnpm --version
 
