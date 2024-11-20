@@ -24,11 +24,9 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
-      # Step 3: Install Dependencies
-      - name: Install dependencies with pnpm
-        run: |
-          npm install -g pnpm
-          pnpm install
+      # Step 3: Install pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       # Step 4: Lint Code
       - name: Lint code
