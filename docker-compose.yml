@@ -1,6 +1,7 @@
 services:
   web:
-    build: ./frontend/
+    build:
+  context: ./frontend
     container_name: Trekora-frontend
     restart: unless-stopped
     environment:
