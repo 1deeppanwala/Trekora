@@ -17,9 +17,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set up Docker
+      # Install Docker
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
+
+      # Install Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
       # Build Docker images
       - name: Build Docker Images
@@ -41,7 +47,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Deploy the application using Docker Compose
+      # Install Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      # Deploy the application
       - name: Deploy Application
         run: |
           docker-compose down
