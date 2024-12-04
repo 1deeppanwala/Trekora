@@ -17,6 +17,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Debug directory structure
+      - name: Debug Directory Structure
+        run: ls -R
+
+      # Navigate to the correct directory (if docker-compose.yml is not in the root)
+      - name: Navigate to Project Directory
+        run: cd Trekora  # Update this to the directory where your docker-compose.yml is located
+
       # Install Docker
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
@@ -30,6 +38,7 @@ jobs:
       # Build and test Docker images
       - name: Build and Test
         run: |
+          cd Trekora  # Ensure commands run from the correct directory
           docker-compose build
           docker-compose run --rm server python manage.py test
           docker-compose run --rm web npm test
@@ -43,6 +52,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Debug directory structure
+      - name: Debug Directory Structure
+        run: ls -R
+
+      # Navigate to the correct directory
+      - name: Navigate to Project Directory
+        run: cd Trekora  # Update to the correct path for your project
+
       # Install Docker Compose
       - name: Install Docker Compose
         run: |
@@ -52,5 +69,6 @@ jobs:
       # Deploy the application
       - name: Deploy Application
         run: |
+          cd Trekora  # Ensure commands run from the correct directory
           docker-compose down
           docker-compose up -d
