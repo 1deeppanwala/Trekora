@@ -1,7 +1,7 @@
 services:
   web:
     build:
-  context: ./frontend
+      context: ./frontend
     container_name: Trekora-frontend
     restart: unless-stopped
     environment:
@@ -25,7 +25,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
 
   server:
-    build: ./backend/
+    build:
+      context: ./backend/
     container_name: Trekora-backend
     restart: unless-stopped
     environment:
