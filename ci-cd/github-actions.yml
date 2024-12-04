@@ -9,70 +9,45 @@ on:
       - main  
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      name: Node.js CI
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
+      # Checkout the repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: pnpm
+          cache: 'pnpm'
 
+      # Install pnpm
       - name: Install pnpm
         run: npm install -g pnpm
 
+      # Install dependencies
       - name: Install dependencies
         run: pnpm install
 
+      # Build the project
       - name: Build the project
         run: pnpm build
 
-      - name: Checkout code
-        uses: actions/checkout@v2  
-
-      - name: Set up Node.js
-    uses: actions/setup-node@v3
-    with:
-      node-version: 18
-      cache: 'pnpm'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Install dependencies
-        run: npm install  
-
+      # Run tests
       - name: Run tests
-        run: npm test  
-      - name: Build project
-        run: npm run build  
+        run: pnpm test
 
+      # Deploy to Expo (optional)
       - name: Deploy to Expo
+        if: success()
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  
-        run: npm run deploy  
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npm run deploy
 
+      # Notify on success
       - name: Notify on Success
-        run: echo "Build and deployment successful!"  
+        if: success()
+        run: echo "Build and deployment successful!"
